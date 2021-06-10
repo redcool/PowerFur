@@ -1,7 +1,7 @@
 #if !defined(POWER_FUR_PASS)
 #define POWER_FUR_PASS
     #include "UnityCG.cginc"
-    #include "../Lib/NodeLib.cginc"
+    #include "Lib/NodeLib.cginc"
 
     struct appdata
     {
