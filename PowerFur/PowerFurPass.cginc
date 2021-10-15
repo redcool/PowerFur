@@ -22,10 +22,12 @@
     };
 
     sampler2D _MainTex;
+    sampler2D _FurMaskMap; // r alpha noise, g position offset atten ,b ao
+    sampler2D _FlowMap;
+
+CBUFFER_START(UnityPerMaterial)
     float4 _MainTex_ST;
     float4 _Color;
-
-    sampler2D _FurMaskMap; // r alpha noise, g position offset atten ,b ao
     float4 _FurMaskMap_ST;
 
     bool _VertexOffsetAttenOn;
@@ -41,7 +43,6 @@
     int _FragmentAOOn,_VertexAOOn;
 
     //flow map
-    sampler2D _FlowMap;
     float _FlowMapIntensity;
     int _FlowMapOn;
 
@@ -53,6 +54,7 @@
     float4 _Color1,_Color2;
 
     float _ThicknessMax,_ThicknessMin;
+CBUFFER_END
 
     float3 CalcWind(float3 worldPos){
         float2 uv = worldPos.xz * _Time.y * _WindSpeed;
