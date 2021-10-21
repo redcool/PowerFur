@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit_Fur 1
+  m_Name: Unlit_Fur 2
   m_Shader: {fileID: 4800000, guid: f34259b6de8dd404180844a0493fc03a, type: 3}
-  m_ShaderKeywords: _FRAGMENTAOON_ON _VERTEXAOON_ON
+  m_ShaderKeywords: _FLOWMAPON_ON _FRAGMENTAOON_ON _VERTEXAOON_ON _VERTEXOFFSETATTENUSEFURMASKY_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,43 +20,44 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _FlowMap:
-        m_Texture: {fileID: 2800000, guid: 7bf833574703d114c99b09228f302f95, type: 3}
-        m_Scale: {x: 10, y: 10}
+        m_Texture: {fileID: 2800000, guid: 698f1c790af2a6247967401845915d85, type: 3}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FurMaskMap:
         m_Texture: {fileID: 2800000, guid: 7bf833574703d114c99b09228f302f95, type: 3}
-        m_Scale: {x: 4, y: 8}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FurTex:
         m_Texture: {fileID: 2800000, guid: 7bf833574703d114c99b09228f302f95, type: 3}
         m_Scale: {x: 4, y: 8}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: c5b631ce17b872146bcde68f3d4e525e, type: 3}
+        m_Texture: {fileID: 2800000, guid: d49b1c4994f26e84d94df6a9abb47b77, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Density: 2.41
-    - _FlowMapIntensity: 1.1
-    - _FlowMapOn: 0
+    - _FlowMapIntensity: 0.48
+    - _FlowMapOn: 1
     - _FragmentAOOn: 1
     - _FurRadius: 1.44
-    - _Length: 0.22
+    - _Length: 0.66
     - _OcclusionPower: 4.92
-    - _Rigidness: 2.24
-    - _ThicknessMax: 1.73
-    - _ThicknessMin: 0.05
+    - _Rigidness: 0
+    - _ThicknessMax: 1.76
+    - _ThicknessMin: -0.08
     - _Tile: 0.17
     - _VertexAOOn: 1
-    - _VertexOffsetAttenUseFurMaskY: 0
+    - _VertexOffsetAttenUseFurMaskY: 1
+    - _WindOn: 0
     - _WindScale: -0.02
-    - _WindSpeed: 1
+    - _WindSpeed: 0.48
     m_Colors:
     - _Alpha: {r: 0.14, g: 0.87, b: 0, a: 0}
     - _Color: {r: 2.270603, g: 2.270603, b: 2.270603, a: 1}
     - _Color1: {r: 1, g: 0.9669811, b: 0.9669811, a: 1}
     - _Color2: {r: 3.8182085, g: 3.8182085, b: 3.8182085, a: 1}
     - _OcclusionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _UVOffset: {r: 2.26, g: 0, b: 0.89, a: -3.83}
+    - _UVOffset: {r: 10, g: 10, b: 0, a: 0}
     - _WindDir: {r: 0, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
