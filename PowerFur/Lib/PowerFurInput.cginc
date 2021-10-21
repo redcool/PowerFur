@@ -28,7 +28,7 @@ CBUFFER_START(UnityPerMaterial)
     float4 _Color;
     float4 _FurMaskMap_ST;
 
-    bool _VertexOffsetAttenUseFurMaskY;
+    int _VertexOffsetAttenUseFurMaskY;
     float _Density;
     float _Length,_Rigidness;
     //
