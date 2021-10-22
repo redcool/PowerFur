@@ -9,10 +9,10 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Unlit_Fur 2
   m_Shader: {fileID: 4800000, guid: f34259b6de8dd404180844a0493fc03a, type: 3}
-  m_ShaderKeywords: _FLOWMAPON_ON _FRAGMENTAOON_ON _VERTEXAOON_ON _VERTEXOFFSETATTENUSEFURMASKY_ON
+  m_ShaderKeywords: _FRAGMENTAOON_ON _VERTEXAOON_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
+  m_DoubleSidedGI: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
@@ -37,27 +37,30 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Density: 2.41
-    - _FlowMapIntensity: 0.48
-    - _FlowMapOn: 1
+    - _FlowMapIntensity: 0.62
+    - _FlowMapOn: 0
     - _FragmentAOOn: 1
     - _FurRadius: 1.44
-    - _Length: 0.66
+    - _Length: 0.51
+    - _LightOn: 0
+    - _Metallic: 1
     - _OcclusionPower: 4.92
     - _Rigidness: 0
-    - _ThicknessMax: 1.76
-    - _ThicknessMin: -0.08
+    - _Roughness: 0.602
+    - _ThicknessMax: 1
+    - _ThicknessMin: -0.04
     - _Tile: 0.17
     - _VertexAOOn: 1
-    - _VertexOffsetAttenUseFurMaskY: 1
+    - _VertexOffsetAttenUseFurMaskY: 0
     - _WindOn: 0
-    - _WindScale: -0.02
-    - _WindSpeed: 0.48
+    - _WindScale: 1.36
+    - _WindSpeed: 1
     m_Colors:
     - _Alpha: {r: 0.14, g: 0.87, b: 0, a: 0}
     - _Color: {r: 2.270603, g: 2.270603, b: 2.270603, a: 1}
-    - _Color1: {r: 1, g: 0.9669811, b: 0.9669811, a: 1}
-    - _Color2: {r: 3.8182085, g: 3.8182085, b: 3.8182085, a: 1}
+    - _Color1: {r: 0.18867922, g: 0.002669984, b: 0.002669984, a: 1}
+    - _Color2: {r: 3.1139615, g: 3.1139615, b: 3.1139615, a: 1}
     - _OcclusionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _UVOffset: {r: 10, g: 10, b: 0, a: 0}
+    - _UVOffset: {r: 5, g: 5, b: 0, a: 0}
     - _WindDir: {r: 0, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -42,13 +42,17 @@ Material:
     - _FragmentAOOn: 1
     - _FurRadius: 1.44
     - _Length: 0.22
+    - _LightOn: 0
+    - _Metallic: 0.679
     - _OcclusionPower: 4.92
     - _Rigidness: 2.24
+    - _Roughness: 0.5
     - _ThicknessMax: 1.73
     - _ThicknessMin: 0.05
     - _Tile: 0.17
     - _VertexAOOn: 1
     - _VertexOffsetAttenUseFurMaskY: 0
+    - _WindOn: 0
     - _WindScale: -0.02
     - _WindSpeed: 1
     m_Colors:

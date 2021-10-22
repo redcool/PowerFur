@@ -1,4 +1,4 @@
-﻿Shader "Character/PowerFur"
+﻿Shader "Character/PowerFurInstanced"
 {
     Properties
     {
@@ -52,95 +52,10 @@
         // blend srcAlpha one
         pass{
             CGPROGRAM
-            #define FUR_OFFSET 0.05
             #pragma vertex vert
             #pragma fragment frag
+            #pragma multi_compile_instancing
             #include "Lib/PowerFurPass.cginc"
-            ENDCG
-        }
-        
-        pass{
-            CGPROGRAM
-            #define FUR_OFFSET 0.1
-            #pragma vertex vert
-            #pragma fragment frag
-            #include "Lib/PowerFurPass.cginc"
-            ENDCG
-        }
-
-        pass{
-            CGPROGRAM
-            #define FUR_OFFSET 0.13
-            #pragma vertex vert
-            #pragma fragment frag
-            #include "Lib/PowerFurPass.cginc"            
-            ENDCG
-        }
-        pass{
-            
-            CGPROGRAM
-            #define FUR_OFFSET 0.16
-            #pragma vertex vert
-            #pragma fragment frag
-            #include "Lib/PowerFurPass.cginc"            
-            ENDCG
-        }
-
-         pass{
-            CGPROGRAM
-            #define FUR_OFFSET 0.19
-            #pragma vertex vert
-            #pragma fragment frag
-            #include "Lib/PowerFurPass.cginc"            
-            ENDCG
-        }
-
-        pass{
-            CGPROGRAM
-            #define FUR_OFFSET 0.22
-            #pragma vertex vert
-            #pragma fragment frag
-            #include "Lib/PowerFurPass.cginc"            
-            ENDCG
-        }
-        pass{
-            CGPROGRAM
-            #define FUR_OFFSET 0.25
-            #pragma vertex vert
-            #pragma fragment frag
-            #include "Lib/PowerFurPass.cginc"            
-            ENDCG
-        }
-                pass{
-            CGPROGRAM
-            #define FUR_OFFSET 0.28
-            #pragma vertex vert
-            #pragma fragment frag
-            #include "Lib/PowerFurPass.cginc"            
-            ENDCG
-        }
-        pass{
-            CGPROGRAM
-            #define FUR_OFFSET 0.31
-            #pragma vertex vert
-            #pragma fragment frag
-            #include "Lib/PowerFurPass.cginc"            
-            ENDCG
-        }
-        pass{
-            CGPROGRAM
-            #define FUR_OFFSET 0.34
-            #pragma vertex vert
-            #pragma fragment frag
-            #include "Lib/PowerFurPass.cginc"            
-            ENDCG
-        }
-        pass{
-            CGPROGRAM
-            #define FUR_OFFSET 0.37
-            #pragma vertex vert
-            #pragma fragment frag
-            #include "Lib/PowerFurPass.cginc"            
             ENDCG
         }
     }
