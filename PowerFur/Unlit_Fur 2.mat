@@ -11,7 +11,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: f34259b6de8dd404180844a0493fc03a, type: 3}
   m_ShaderKeywords: _FRAGMENTAOON_ON _VERTEXAOON_ON
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}

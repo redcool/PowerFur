@@ -58,8 +58,11 @@ CBUFFER_START(UnityPerMaterial)
     int _LightOn;
     float _Roughness;
     float _Metallic;
-    float _FurOffset;
+
 CBUFFER_END
+    #if !defined(MULTI_PASS)
+    float _FurOffset;
+    #endif
 #else
 UNITY_INSTANCING_BUFFER_START(PropBuffer)
     UNITY_DEFINE_INSTANCED_PROP(float4,_MainTex_ST)
