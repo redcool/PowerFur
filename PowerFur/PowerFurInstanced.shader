@@ -16,8 +16,8 @@
         [Toggle]_VertexAOOn("_VertexAOOn",int) = 1
         [Toggle]_FragmentAOOn("_FragmentAOOn",int) = 1
 
-        [Header(UV Offset)]
-        _UVOffset("_UVOffset(XY:uv tiling,ZW: offset)",vector) = (0,0,0,0)
+        // [Header(UV Offset)]
+        // _UVOffset("_UVOffset(XY:uv tiling,ZW: offset)",vector) = (0,0,0,0)
         
         [Header(FlowMap)]
         [Toggle]_FlowMapOn("_FlowMapOn",int) = 0

@@ -36,7 +36,7 @@ CBUFFER_START(UnityPerMaterial)
     float _Length;
     float _Rigidness;
     
-    float4 _UVOffset;
+    // float4 _UVOffset;
 
     // ao 
     int _FragmentAOOn,_VertexAOOn;
