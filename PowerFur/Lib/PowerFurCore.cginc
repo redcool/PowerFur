@@ -37,6 +37,6 @@
 
         float specTerm = CalcSpec(l,v,normal,a,a2) ;
         specColor = specTerm * lerp(0.04, albedo,metallic)* nl;
-        diffColor = albedo * saturate(1 - specColor)* nl;
+        diffColor = albedo * saturate(1 - metallic)* nl;
     }
 #endif //POWER_FUR_CORE_CGINC

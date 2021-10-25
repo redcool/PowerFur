@@ -86,7 +86,7 @@
             float3 diffColor = 0,specColor = 0;
             float nl = 0;
             CalcLight(i.worldPos,i.worldNormal,albedo,_Roughness,_Metallic,diffColor/**/,specColor/**/,nl);
-            float3 brdfColor = (diffColor + specColor * furMask.x);
+            float3 brdfColor = (diffColor + specColor);
             col.xyz = lerp(albedo ,brdfColor,nl) * i.diffColor;
         }else{
             col.xyz = albedo * i.diffColor;
