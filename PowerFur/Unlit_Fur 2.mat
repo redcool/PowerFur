@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Unlit_Fur 2
   m_Shader: {fileID: 4800000, guid: f34259b6de8dd404180844a0493fc03a, type: 3}
-  m_ShaderKeywords: _FRAGMENTAOON_ON _VERTEXAOON_ON
+  m_ShaderKeywords: _FRAGMENTAOON_ON _LIGHTON_ON _VERTEXAOON_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 1
@@ -25,7 +25,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _FurMaskMap:
         m_Texture: {fileID: 2800000, guid: 7bf833574703d114c99b09228f302f95, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 100, y: 100}
         m_Offset: {x: 0, y: 0}
     - _FurTex:
         m_Texture: {fileID: 2800000, guid: 7bf833574703d114c99b09228f302f95, type: 3}
@@ -41,14 +41,14 @@ Material:
     - _FlowMapOn: 0
     - _FragmentAOOn: 1
     - _FurRadius: 1.44
-    - _Length: 0.51
-    - _LightOn: 0
-    - _Metallic: 1
+    - _Length: 0.52
+    - _LightOn: 1
+    - _Metallic: 0.791
     - _OcclusionPower: 4.92
-    - _Rigidness: 0
-    - _Roughness: 0.602
-    - _ThicknessMax: 1
-    - _ThicknessMin: -0.04
+    - _Rigidness: -0.5
+    - _Roughness: 0.458
+    - _ThicknessMax: 2.19
+    - _ThicknessMin: -0.07
     - _Tile: 0.17
     - _VertexAOOn: 1
     - _VertexOffsetAttenUseFurMaskY: 0
@@ -58,9 +58,9 @@ Material:
     m_Colors:
     - _Alpha: {r: 0.14, g: 0.87, b: 0, a: 0}
     - _Color: {r: 2.270603, g: 2.270603, b: 2.270603, a: 1}
-    - _Color1: {r: 0.18867922, g: 0.002669984, b: 0.002669984, a: 1}
+    - _Color1: {r: 1, g: 0, b: 0, a: 1}
     - _Color2: {r: 3.1139615, g: 3.1139615, b: 3.1139615, a: 1}
     - _OcclusionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _UVOffset: {r: 5, g: 5, b: 0, a: 0}
+    - _UVOffset: {r: 6.53, g: 5, b: 0, a: 0}
     - _WindDir: {r: 0, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
