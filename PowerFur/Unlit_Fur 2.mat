@@ -41,12 +41,12 @@ Material:
     - _FlowMapOn: 0
     - _FragmentAOOn: 1
     - _FurRadius: 1.44
-    - _Length: 0.52
+    - _Length: 0.35
     - _LightOn: 1
-    - _Metallic: 0.791
+    - _Metallic: 0.63
     - _OcclusionPower: 4.92
     - _Rigidness: -0.5
-    - _Roughness: 0.458
+    - _Roughness: 0.78
     - _ThicknessMax: 2.19
     - _ThicknessMin: -0.07
     - _Tile: 0.17
@@ -57,7 +57,7 @@ Material:
     - _WindSpeed: 1
     m_Colors:
     - _Alpha: {r: 0.14, g: 0.87, b: 0, a: 0}
-    - _Color: {r: 2.270603, g: 2.270603, b: 2.270603, a: 1}
+    - _Color: {r: 1.2011338, g: 1.2011338, b: 1.2011338, a: 1}
     - _Color1: {r: 1, g: 0, b: 0, a: 1}
     - _Color2: {r: 3.1139615, g: 3.1139615, b: 3.1139615, a: 1}
     - _OcclusionColor: {r: 1, g: 1, b: 1, a: 1}

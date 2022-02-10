@@ -30,7 +30,7 @@ public class DrawFurObjectInstanced : MonoBehaviour
         r.enabled = false;
 
 
-
+        transformList.Clear();
         var offsetList = new List<float>();
         for (int i = 0; i < drawCount; i++)
         {
