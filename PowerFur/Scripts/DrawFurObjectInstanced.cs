@@ -57,5 +57,12 @@ public class DrawFurObjectInstanced : MonoBehaviour
 
             Graphics.DrawMeshInstanced(mesh, i, mats[i], transformList, block);
         }
+
+#if UNITY_EDITOR
+        if (transform.hasChanged)
+        {
+            OnEnable();
+        }
+#endif
     }
 }
