@@ -1,4 +1,4 @@
-﻿Shader "Character/Unlit/PowerFurPasses"
+﻿Shader "Character/Fur/PowerFurPasses"
 {
     Properties
     {
@@ -50,6 +50,7 @@
 		Blend SrcAlpha OneMinusSrcAlpha
         // blend srcAlpha one
         pass{
+            Tags{"LightMode"="FurPass0"}
             CGPROGRAM
             #define _FurOffset 0.05
             #pragma vertex vert
@@ -60,6 +61,7 @@
         }
         
         pass{
+            Tags{"LightMode"="FurPass1"}
             CGPROGRAM
             #define _FurOffset 0.1
             #pragma vertex vert
@@ -70,6 +72,7 @@
         }
 
         pass{
+            Tags{"LightMode"="FurPass2"}
             CGPROGRAM
             #define _FurOffset 0.13
             #pragma vertex vert
@@ -79,7 +82,7 @@
             ENDCG
         }
         pass{
-            
+            Tags{"LightMode"="FurPass3"}
             CGPROGRAM
             #define _FurOffset 0.16
             #pragma vertex vert
@@ -90,6 +93,7 @@
         }
 
          pass{
+            Tags{"LightMode"="FurPass4"}
             CGPROGRAM
             #define _FurOffset 0.19
             #pragma vertex vert
@@ -100,6 +104,7 @@
         }
 
         pass{
+            Tags{"LightMode"="FurPass5"}
             CGPROGRAM
             #define _FurOffset 0.22
             #pragma vertex vert
@@ -109,6 +114,7 @@
             ENDCG
         }
         pass{
+            Tags{"LightMode"="FurPass6"}
             CGPROGRAM
             #define _FurOffset 0.25
             #pragma vertex vert
@@ -117,7 +123,8 @@
             #include "Lib/PowerFurPass.cginc"            
             ENDCG
         }
-                pass{
+        pass{
+            Tags{"LightMode"="FurPass7"}
             CGPROGRAM
             #define _FurOffset 0.28
             #pragma vertex vert
@@ -127,6 +134,7 @@
             ENDCG
         }
         pass{
+            Tags{"LightMode"="FurPass8"}
             CGPROGRAM
             #define _FurOffset 0.31
             #pragma vertex vert
@@ -136,6 +144,7 @@
             ENDCG
         }
         pass{
+            Tags{"LightMode"="FurPass9"}
             CGPROGRAM
             #define _FurOffset 0.34
             #pragma vertex vert
@@ -145,6 +154,7 @@
             ENDCG
         }
         pass{
+            Tags{"LightMode"="FurPass10"}
             CGPROGRAM
             #define _FurOffset 0.37
             #pragma vertex vert

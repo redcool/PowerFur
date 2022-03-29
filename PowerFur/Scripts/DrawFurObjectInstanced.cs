@@ -29,7 +29,11 @@ public class DrawFurObjectInstanced : MonoBehaviour
         mats = r.sharedMaterials;
         r.enabled = false;
 
+        UpdateTransformList();
+    }
 
+    private void UpdateTransformList()
+    {
         transformList.Clear();
         var offsetList = new List<float>();
         for (int i = 0; i < drawCount; i++)
@@ -58,11 +62,9 @@ public class DrawFurObjectInstanced : MonoBehaviour
             Graphics.DrawMeshInstanced(mesh, i, mats[i], transformList, block);
         }
 
-#if UNITY_EDITOR
         if (transform.hasChanged)
         {
-            OnEnable();
+            UpdateTransformList();
         }
-#endif
     }
 }

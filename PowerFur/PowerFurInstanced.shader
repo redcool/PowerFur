@@ -1,4 +1,4 @@
-﻿Shader "Character/PowerFurInstanced"
+﻿Shader "Character/Fur/PowerFurInstanced"
 {
     Properties
     {
