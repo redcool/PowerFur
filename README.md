@@ -8,3 +8,6 @@ urp : need multipass feature,
      1 attach DrawFurObjectInstanced.cs to gameobject
      2 gameobject's shader use PowerFurInstanced.shader
 2 skinned mesh use PowerFurPasses.shader
+
+Reference Git:
+https://github.com/redcool/PowerUtilities.git
