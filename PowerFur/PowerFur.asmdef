@@ -1,3 +1,16 @@
 {
-	"name": "PowerFur"
+    "name": "PowerFur",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4d7978c8e91b36c4898b68b93a664cc7"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

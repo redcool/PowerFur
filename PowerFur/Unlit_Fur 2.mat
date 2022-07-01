@@ -37,18 +37,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Density: 2.41
-    - _FlowMapIntensity: 0.62
+    - _FlowMapIntensity: 6.75
     - _FlowMapOn: 0
     - _FragmentAOOn: 1
     - _FurRadius: 1.44
-    - _Length: 0.35
+    - _Length: 0.81
     - _LightOn: 1
-    - _Metallic: 0.63
+    - _Metallic: 0.955
     - _OcclusionPower: 4.92
-    - _Rigidness: -0.5
-    - _Roughness: 0.78
-    - _ThicknessMax: 2.19
-    - _ThicknessMin: -0.07
+    - _Rigidness: -1.01
+    - _Roughness: 0.649
+    - _ThicknessMax: 1.55
+    - _ThicknessMin: 0.08
     - _Tile: 0.17
     - _VertexAOOn: 1
     - _VertexOffsetAttenUseFurMaskY: 0
@@ -58,8 +58,8 @@ Material:
     m_Colors:
     - _Alpha: {r: 0.14, g: 0.87, b: 0, a: 0}
     - _Color: {r: 1.2011338, g: 1.2011338, b: 1.2011338, a: 1}
-    - _Color1: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
-    - _Color2: {r: 3.1139615, g: 3.1139615, b: 3.1139615, a: 1}
+    - _Color1: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+    - _Color2: {r: 2.098455, g: 2.098455, b: 2.098455, a: 1}
     - _OcclusionColor: {r: 1, g: 1, b: 1, a: 1}
     - _UVOffset: {r: 6.53, g: 5, b: 0, a: 0}
     - _WindDir: {r: 0, g: 1, b: 0, a: 0}
