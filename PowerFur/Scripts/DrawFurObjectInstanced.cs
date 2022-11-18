@@ -24,27 +24,11 @@ using UnityEngine.Rendering;
     }
 #endif
 
-    [Serializable]
-    public class DrawInfo
-    {
-        public int subMeshId;
-        [Min(0)]public int drawCount = 11;
-
-        [HideInInspector]public List<Matrix4x4> transformList = new List<Matrix4x4>();
-        [HideInInspector]public List<float> offsets = new List<float>();
-
-        public void Clear()
-        {
-            transformList.Clear();
-            offsets.Clear();
-        }
-
-        public bool IsValid() => transformList.Count > 0 && offsets.Count == transformList.Count;
-    }
     [ExecuteInEditMode]
     public class DrawFurObjectInstanced : MonoBehaviour
     {
-        readonly int _FurOffset = Shader.PropertyToID(nameof(_FurOffset));
+        [Header("Shader Variables")]
+        public string _FurOffset = nameof(_FurOffset);
 
         [Header("Offset Prop")]
         [Min(0)]
@@ -57,7 +41,8 @@ using UnityEngine.Rendering;
         [Min(0)] public int drawCount = 11;
 
         [Header("Sub Meshes")]
-        DrawInfo[] drawinfos;
+        List<Matrix4x4> transformList = new List<Matrix4x4>();
+        List<float> offsets = new List<float>();
 
         Mesh mesh;
         Renderer render;
@@ -80,31 +65,22 @@ using UnityEngine.Rendering;
             mats = render.sharedMaterials;
             //render.enabled = false;
 
-            SetupDrawinfos();
-
             UpdateTransformList();
         }
-
-        private void SetupDrawinfos()
+        public void Clear()
         {
-            drawinfos = new DrawInfo[mesh.subMeshCount];
-            for (int i = 0; i < drawinfos.Length; i++)
-            {
-                drawinfos[i] = new DrawInfo { subMeshId = i, drawCount = drawCount };
-            }
-
+            transformList.Clear();
+            offsets.Clear();
         }
+
 
         private void UpdateTransformList()
         {
-            foreach (var item in drawinfos)
+            Clear();
+            for (int i = 0; i < drawCount; i++)
             {
-                item.Clear();
-                for (int i = 0; i < item.drawCount; i++)
-                {
-                    item.transformList.Add(transform.localToWorldMatrix);
-                    item.offsets.Add(baseScale + i * stepScale);
-                }
+                transformList.Add(transform.localToWorldMatrix);
+                offsets.Add(baseScale + i * stepScale);
             }
 
         }
@@ -125,22 +101,18 @@ using UnityEngine.Rendering;
                 UpdateTransformList();
             }
 
-            for (int i = 0; i < drawinfos.Length; i++)
+            for (int i = 0; i < mesh.subMeshCount; i++)
             {
-                if (i > mats.Length || i >= drawinfos.Length)
+                if (i > mats.Length)
                     break;
 
-                var info = drawinfos[i];
-                DrawInstanced(info, i, mats[i]);
+                DrawInstanced(i, mats[i]);
             }
 
         }
 
-        void DrawInstanced(DrawInfo info,int subMeshId,Material mat)
+        void DrawInstanced(int subMeshId, Material mat)
         {
-            if (!info.IsValid())
-                return;
-
             if (!mat.enableInstancing)
             {
                 //renderParams.layer = gameObject.layer;
@@ -150,8 +122,8 @@ using UnityEngine.Rendering;
                 return;
             }
 
-            block.SetFloatArray(_FurOffset, info.offsets);
-            Graphics.DrawMeshInstanced(mesh, subMeshId, mat, info.transformList, block);
+            block.SetFloatArray(_FurOffset, offsets);
+            Graphics.DrawMeshInstanced(mesh, subMeshId, mat, transformList, block);
         }
     }
 }
