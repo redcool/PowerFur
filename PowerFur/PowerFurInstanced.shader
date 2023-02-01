@@ -2,6 +2,7 @@
 {
     Properties
     {
+        [GroupHeader(v0.0.2)]
         [Group(Main)]
         [GroupItem(Main)]_MainTex ("Texture", 2D) = "white" {}
         [GroupItem(Main)][hdr]_Color("_Color",color) = (1,1,1,1)
@@ -42,14 +43,23 @@
         [GroupItem(Light)]_Metallic("_Metallic",range(0,1)) = 0
         [GroupItem(Light)]_Roughness("_Roughness",range(0,1)) = 0.5
 
-    }
+        [Group(Settings)]
+        [GroupToggle(Settings)]_ZWrite("_ZWrite",int) = 1
+        [GroupEnum(Settings,UnityEngine.Rendering.CullMode)]_CullMode("_CullMode",float) = 2
+        [GroupEnum(Settings,Normal 0 Soft 1)]_FurEdgeMode("_FurEdgeMode",float) = 0
+        
+        // _Cutoff("_Cutoff",range(0,1)) = 0.5
 
+        [HideInInspector]_FurOffset("_FurOffset",Float) = 0
+    }
 
     SubShader
     {
 		Tags { "RenderType"="Transparent" "Queue" = "Transparent" }
 		Blend SrcAlpha OneMinusSrcAlpha
         // blend srcAlpha one
+        zwrite[_ZWrite]
+        cull [_CullMode]
         pass{
             CGPROGRAM
             #pragma vertex vert

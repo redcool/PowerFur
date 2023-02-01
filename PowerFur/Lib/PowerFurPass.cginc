@@ -58,8 +58,8 @@
         return o;
     }
 
-    float Pow4(float a){
-        return a*a*a*a;
+    float Pow(float a){
+        return a*a*a;
     }
 
     float4 frag (v2f i) : SV_Target
@@ -97,13 +97,24 @@
         }
 
         float alphaNoise = furMask.x;
-        float alphaLayered = Pow4(1 - _FurOffset);
-        float a = smoothstep(_ThicknessMin,_ThicknessMax, alphaLayered + alphaNoise);
+        float alphaLayered = Pow(1 - _FurOffset);
+        // alphaLayered = smoothstep(0.4,0.9,alphaLayered);
+
+        float softEdgeAlpha = (1 + alphaNoise) * alphaLayered;
+        // style 2
+        float bottomAlpha = alphaLayered + alphaNoise;
+        // float topAlpha =  (1 + alphaNoise) * alphaLayered;
+        // float gradientAlpha = lerp(bottomAlpha,topAlpha,alphaLayered);
+
+        float alphaModes[2] = {bottomAlpha,softEdgeAlpha};
+        float a = smoothstep(_ThicknessMin,_ThicknessMax, alphaModes[_FurEdgeMode]);
+        a = saturate(a);
+// clip(a-_Cutoff-0.0001);
+
         if(_FurOffset < 0.1)
             a = 1;
-        
         // apply fog
         UNITY_APPLY_FOG(i.fogCoord, col);
-        return float4(col.xyz,saturate(a));
+        return float4(col.xyz,a);
     }
 #endif //POWER_FUR_PASS

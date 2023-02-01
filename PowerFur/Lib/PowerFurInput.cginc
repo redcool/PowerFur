@@ -25,46 +25,7 @@
     sampler2D _FurMaskMap; // r alpha noise, g position offset atten ,b ao
     sampler2D _FlowMap;
 
-#if !defined(INSTANCING_ON) 
-CBUFFER_START(UnityPerMaterial)
-    float4 _MainTex_ST;
-    float4 _Color;
-    float4 _FurMaskMap_ST;
-
-    int _VertexOffsetAttenUseFurMaskY;
-    float _Density;
-    float _Length;
-    float _Rigidness;
-    
-    // float4 _UVOffset;
-
-    // ao 
-    int _FragmentAOOn,_VertexAOOn;
-
-    //flow map
-    int _FlowMapOn;
-    float4 _FlowMap_ST;
-    float _FlowMapIntensity;
-
-    //wind
-    int _WindOn;
-    float _WindScale;
-    float3 _WindDir;
-
-    // diffuse color
-    float4 _Color1,_Color2;
-
-    float _ThicknessMax,_ThicknessMin;
-    int _LightOn;
-    float _Roughness;
-    float _Metallic;
-
-CBUFFER_END
-    #if !defined(MULTI_PASS)
-    float _FurOffset;
-    #endif
-#else
-UNITY_INSTANCING_BUFFER_START(PropBuffer)
+UNITY_INSTANCING_BUFFER_START(UnityPerMaterial)
     UNITY_DEFINE_INSTANCED_PROP(float4,_MainTex_ST)
     UNITY_DEFINE_INSTANCED_PROP(float4,_Color)
     UNITY_DEFINE_INSTANCED_PROP(float4,_FurMaskMap_ST)
@@ -92,36 +53,45 @@ UNITY_INSTANCING_BUFFER_START(PropBuffer)
     UNITY_DEFINE_INSTANCED_PROP(float,_LightOn)
     UNITY_DEFINE_INSTANCED_PROP(float,_Roughness)
     UNITY_DEFINE_INSTANCED_PROP(float,_Metallic)
+    // UNITY_DEFINE_INSTANCED_PROP(float,_Cutoff)
+    UNITY_DEFINE_INSTANCED_PROP(float,_FurEdgeMode)
+    #if !defined(MULTI_PASS)
     UNITY_DEFINE_INSTANCED_PROP(float,_FurOffset)
-UNITY_INSTANCING_BUFFER_END(PropBuffer)
+    #endif
+UNITY_INSTANCING_BUFFER_END(UnityPerMaterial)
 
-#define _MainTex_ST UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_MainTex_ST)
-#define _Color UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_Color)
-#define _FurMaskMap_ST UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_FurMaskMap_ST)
-#define _VertexOffsetAttenUseFurMaskY UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_VertexOffsetAttenUseFurMaskY)
-#define _Density UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_Density)
+#define _MainTex_ST UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_MainTex_ST)
+#define _Color UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_Color)
+#define _FurMaskMap_ST UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_FurMaskMap_ST)
+#define _VertexOffsetAttenUseFurMaskY UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_VertexOffsetAttenUseFurMaskY)
+#define _Density UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_Density)
 
-#define _Length UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_Length)
-#define _Rigidness UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_Rigidness)
-#define _UVOffset UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_UVOffset)
-#define _FragmentAOOn UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_FragmentAOOn)
-#define _VertexAOOn UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_VertexAOOn)
+#define _Length UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_Length)
+#define _Rigidness UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_Rigidness)
+#define _UVOffset UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_UVOffset)
+#define _FragmentAOOn UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_FragmentAOOn)
+#define _VertexAOOn UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_VertexAOOn)
 
-#define _FlowMapOn UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_FlowMapOn)
-#define _FlowMap_ST UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_FlowMap_ST)
-#define _FlowMapIntensity UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_FlowMapIntensity)
-#define _WindOn UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_WindOn)
-#define _WindScale UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_WindScale)
+#define _FlowMapOn UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_FlowMapOn)
+#define _FlowMap_ST UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_FlowMap_ST)
+#define _FlowMapIntensity UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_FlowMapIntensity)
+#define _WindOn UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_WindOn)
+#define _WindScale UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_WindScale)
 
-#define _WindDir UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_WindDir)
-#define _Color1 UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_Color1)
-#define _Color2 UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_Color2)
-#define _ThicknessMax UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_ThicknessMax)
-#define _ThicknessMin UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_ThicknessMin)
+#define _WindDir UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_WindDir)
+#define _Color1 UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_Color1)
+#define _Color2 UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_Color2)
+#define _ThicknessMax UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_ThicknessMax)
+#define _ThicknessMin UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_ThicknessMin)
 
-#define _LightOn UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_LightOn)
-#define _Roughness UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_Roughness)
-#define _Metallic UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_Metallic)
-#define _FurOffset UNITY_ACCESS_INSTANCED_PROP(PropBuffer,_FurOffset)
-#endif 
+#define _LightOn UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_LightOn)
+#define _Roughness UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_Roughness)
+#define _Metallic UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_Metallic)
+// #define _Cutoff UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_Cutoff)
+#define _FurEdgeMode UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_FurEdgeMode)
+
+// instance version vs multipass
+#if !defined(MULTI_PASS)
+#define _FurOffset UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_FurOffset)
+#endif
 #endif //POWER_FUR_INPUT_CGINC
