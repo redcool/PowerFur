@@ -1,9 +1,10 @@
 #if !defined(POWER_FUR_PASS)
 #define POWER_FUR_PASS
-    #include "UnityCG.cginc"
-    #include "Lib/NodeLib.cginc"
-    #include "Lib/PowerFurInput.cginc"
-    #include "Lib/PowerFurCore.cginc"
+    #include "../../../PowerShaderLib/Lib/UnityLib.hlsl"
+    #include "../../../PowerShaderLib/Lib/NodeLib.hlsl"
+    #include "../../../PowerShaderLib/URPLib/URP_Fog.hlsl"
+    #include "Lib/PowerFurCore.hlsl"
+    #include "Lib/PowerFurInput.hlsl"
 
     v2f vert (appdata v)
     {
@@ -34,13 +35,12 @@
 
         o.vertex = mul(UNITY_MATRIX_VP,float4(worldPos,1));
         o.uv.xy = mainUV;
-
         // _FurMaskMap_ST uv offset
         // o.uv.zw = v.uv * _UVOffset.xy + _UVOffset.zw * _FurOffset;
         // float2 uvOffset = _FurOffset * _UVOffset.xy * 0.1;
         o.uv.zw = v.uv * _FurMaskMap_ST.xy + _FurMaskMap_ST.zw;
 
-        UNITY_TRANSFER_FOG(o,o.vertex);
+        o.fogCoord = ComputeFogFactor(o.vertex.z);
 
         // diffuse color
         float3 normal = UnityObjectToWorldNormal(v.normal);        
@@ -65,7 +65,6 @@
     float4 frag (v2f i) : SV_Target
     {
         UNITY_SETUP_INSTANCE_ID(i);
-        
         // sample the texture
         float4 albedo = tex2D(_MainTex, i.uv.xy) * _Color;
         float4 col = float4(0,0,0,1);
@@ -114,7 +113,7 @@
         if(_FurOffset < 0.1)
             a = 1;
         // apply fog
-        UNITY_APPLY_FOG(i.fogCoord, col);
+        MixFog(col.xyz,i.fogCoord);
         return float4(col.xyz,a);
     }
 #endif //POWER_FUR_PASS

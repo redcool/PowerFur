@@ -59,148 +59,152 @@
         // blend srcAlpha one
         pass{
             Tags{"LightMode"="FurPass0"}
-            CGPROGRAM
+            HLSLPROGRAM
             #define _FurOffset 0.05
             #pragma vertex vert
             #pragma fragment frag
             #define MULTI_PASS  
-            #include "Lib/PowerFurPass.cginc"
-            ENDCG
+            #include "Lib/PowerFurPass.hlsl"
+            ENDHLSL
         }
         
         pass{
             Tags{"LightMode"="FurPass1"}
-            CGPROGRAM
+            HLSLPROGRAM
             #define _FurOffset 0.1
             #pragma vertex vert
             #pragma fragment frag
             #define MULTI_PASS  
-            #include "Lib/PowerFurPass.cginc"
-            ENDCG
+            #include "Lib/PowerFurPass.hlsl"
+            ENDHLSL
         }
 
         pass{
             Tags{"LightMode"="FurPass2"}
-            CGPROGRAM
+            HLSLPROGRAM
             #define _FurOffset 0.13
             #pragma vertex vert
             #pragma fragment frag
             #define MULTI_PASS  
-            #include "Lib/PowerFurPass.cginc"            
-            ENDCG
+            #include "Lib/PowerFurPass.hlsl"            
+            ENDHLSL
         }
         pass{
             Tags{"LightMode"="FurPass3"}
-            CGPROGRAM
+            HLSLPROGRAM
             #define _FurOffset 0.16
             #pragma vertex vert
             #pragma fragment frag
             #define MULTI_PASS  
-            #include "Lib/PowerFurPass.cginc"            
-            ENDCG
+            #include "Lib/PowerFurPass.hlsl"            
+            ENDHLSL
         }
 
          pass{
             Tags{"LightMode"="FurPass4"}
-            CGPROGRAM
+            HLSLPROGRAM
             #define _FurOffset 0.19
             #pragma vertex vert
             #pragma fragment frag
             #define MULTI_PASS  
-            #include "Lib/PowerFurPass.cginc"            
-            ENDCG
+            #include "Lib/PowerFurPass.hlsl"            
+            ENDHLSL
         }
 
         pass{
             Tags{"LightMode"="FurPass5"}
-            CGPROGRAM
+            HLSLPROGRAM
             #define _FurOffset 0.22
             #pragma vertex vert
             #pragma fragment frag
             #define MULTI_PASS  
-            #include "Lib/PowerFurPass.cginc"            
-            ENDCG
+            #include "Lib/PowerFurPass.hlsl"            
+            ENDHLSL
         }
         pass{
             Tags{"LightMode"="FurPass6"}
-            CGPROGRAM
+            HLSLPROGRAM
             #define _FurOffset 0.25
             #pragma vertex vert
             #pragma fragment frag
             #define MULTI_PASS  
-            #include "Lib/PowerFurPass.cginc"            
-            ENDCG
+            #include "Lib/PowerFurPass.hlsl"            
+            ENDHLSL
         }
         pass{
             Tags{"LightMode"="FurPass7"}
-            CGPROGRAM
+            HLSLPROGRAM
             #define _FurOffset 0.28
             #pragma vertex vert
             #pragma fragment frag
             #define MULTI_PASS  
-            #include "Lib/PowerFurPass.cginc"            
-            ENDCG
+            #include "Lib/PowerFurPass.hlsl"            
+            ENDHLSL
         }
         pass{
             Tags{"LightMode"="FurPass8"}
-            CGPROGRAM
+            HLSLPROGRAM
             #define _FurOffset 0.31
             #pragma vertex vert
             #pragma fragment frag
             #define MULTI_PASS  
-            #include "Lib/PowerFurPass.cginc"            
-            ENDCG
+            #include "Lib/PowerFurPass.hlsl"            
+            ENDHLSL
         }
         pass{
             Tags{"LightMode"="FurPass9"}
-            CGPROGRAM
+            HLSLPROGRAM
             #define _FurOffset 0.34
             #pragma vertex vert
             #pragma fragment frag
             #define MULTI_PASS  
-            #include "Lib/PowerFurPass.cginc"            
-            ENDCG
+            #include "Lib/PowerFurPass.hlsl"            
+            ENDHLSL
         }
         pass{
             Tags{"LightMode"="FurPass10"}
-            CGPROGRAM
+            HLSLPROGRAM
             #define _FurOffset 0.37
             #pragma vertex vert
             #pragma fragment frag
             #define MULTI_PASS 
-            #include "Lib/PowerFurPass.cginc"            
-            ENDCG
+            #include "Lib/PowerFurPass.hlsl"            
+            ENDHLSL
         }
 
-        Pass
+		Pass
         {
             Name "ShadowCaster"
             Tags{"LightMode" = "ShadowCaster"}
 
-            ZWrite On
-            ZTest LEqual
+            ZWrite [_ZWriteMode]
             ColorMask 0
-            // Cull[_Cull]
+            Cull[_CullMode]
 
             HLSLPROGRAM
-            // #pragma exclude_renderers gles gles3 glcore
-            // #pragma target 4.5
-
-            // -------------------------------------
-            // Material Keywords
-            // #pragma shader_feature_local_fragment _ALPHATEST_ON
-            // #pragma shader_feature_local_fragment _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
-
             //--------------------------------------
             // GPU Instancing
             #pragma multi_compile_instancing
-            #pragma multi_compile _ DOTS_INSTANCING_ON
 
-            #pragma vertex ShadowPassVertex
-            #pragma fragment ShadowPassFragment
+            #pragma vertex vert
+            #pragma fragment frag
 
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/ShadowCasterPass.hlsl"
+            // -------------------------------------
+            // This is used during shadow map generation to differentiate between directional and punctual light shadows, as they use different formulas to apply Normal Bias
+            #pragma multi_compile_vertex _ _CASTING_PUNCTUAL_LIGHT_SHADOW			
+            // Material Keywords
+            #pragma shader_feature_local_fragment ALPHA_TEST
+
+			#include "../../PowerShaderLib/Lib/UnityLib.hlsl"
+			#include "Lib/PowerFurPass.hlsl"
+			#define SHADOW_PASS
+			#define USE_SAMPLER2D
+			// #define _MainTex _DissolveTex
+
+			// #undef _MainTexChannel
+			// #define _MainTexChannel _DissolveTexChannel
+			#include "../../PowerShaderLib/UrpLib/ShadowCasterPass.hlsl"
+
             ENDHLSL
         }
     }

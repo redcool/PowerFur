@@ -61,12 +61,13 @@
         zwrite[_ZWrite]
         cull [_CullMode]
         pass{
-            CGPROGRAM
+            HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
             #pragma multi_compile_instancing
-            #include "Lib/PowerFurPass.cginc"
-            ENDCG
+            #define UnityPerMaterial UnityPerMaterial1
+            #include "Lib/PowerFurPass.hlsl"
+            ENDHLSL
         }
     }
 }

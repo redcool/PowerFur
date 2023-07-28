@@ -1,6 +1,5 @@
 #if !defined(POWER_FUR_CORE_CGINC)
 #define POWER_FUR_CORE_CGINC
-    #include "UnityCG.cginc"
 
     float3 CalcWind(float3 worldPos,float3 windDir,float windScale){
         float2 uv = worldPos.xz * _Time.y;
