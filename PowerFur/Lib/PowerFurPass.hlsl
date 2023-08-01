@@ -28,12 +28,14 @@
         pos.y += clamp(_Rigidness,-3,3) * pow(_FurOffset,3) * _Length * vertexOffsetAtten;
         
         // apply wind in world space
-        float3 worldPos = mul(unity_ObjectToWorld,float4(pos,1));
+        // float3 worldPos = mul(UNITY_MATRIX_M,float4(pos,1));
+        float3 worldPos = TransformObjectToWorld(pos);
         if(_WindOn){
             worldPos = CalcWind(worldPos,_WindDir,_WindScale);
         }
 
-        o.vertex = mul(UNITY_MATRIX_VP,float4(worldPos,1));
+        // o.vertex = mul(UNITY_MATRIX_VP,float4(worldPos,1));
+        o.vertex = TransformWorldToHClip(worldPos);
         o.uv.xy = mainUV;
         // _FurMaskMap_ST uv offset
         // o.uv.zw = v.uv * _UVOffset.xy + _UVOffset.zw * _FurOffset;
@@ -43,9 +45,9 @@
         o.fogCoord = ComputeFogFactor(o.vertex.z);
 
         // diffuse color
-        float3 normal = UnityObjectToWorldNormal(v.normal);        
-        float3 lightDir = UnityWorldSpaceLightDir(worldPos);
-        float3 viewDir = UnityWorldSpaceViewDir(worldPos);
+        float3 normal = TransformObjectToWorldNormal(v.normal);
+        float3 lightDir = _MainLightPosition;//UnityWorldSpaceLightDir(worldPos);
+        float3 viewDir = GetWorldSpaceViewDir(worldPos);
         float nl = saturate(dot(lightDir,normal));
         // float nv = saturate(dot(viewDir,normal));
 

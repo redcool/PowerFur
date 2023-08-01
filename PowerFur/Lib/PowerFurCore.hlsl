@@ -29,7 +29,7 @@
     }
     void CalcLight(float3 worldPos,float3 normal,float3 albedo,float roughness,float metallic,out float3 diffColor/**/,out float3 specColor/**/,out float nl){
         float3 l = UnityWorldSpaceLightDir(worldPos);
-        float3 v = UnityWorldSpaceViewDir(worldPos);
+        float3 v = GetWorldSpaceViewDir(worldPos);
         float a  =roughness * roughness;
         float a2 = a*a;
         nl = saturate(dot(normal,l));

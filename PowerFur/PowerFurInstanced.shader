@@ -65,7 +65,8 @@
             #pragma vertex vert
             #pragma fragment frag
             #pragma multi_compile_instancing
-            #define UnityPerMaterial UnityPerMaterial1
+            #define UnityPerMaterial _UnityPerMaterial
+            // #define USE_URP
             #include "Lib/PowerFurPass.hlsl"
             ENDHLSL
         }

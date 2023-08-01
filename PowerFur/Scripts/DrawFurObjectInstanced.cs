@@ -48,7 +48,7 @@ using UnityEngine.Rendering;
         Renderer render;
         Material[] mats;
         static MaterialPropertyBlock block;
-        RenderParams renderParams;
+
         // Start is called before the first frame update
         public void OnEnable()
         {
@@ -65,8 +65,10 @@ using UnityEngine.Rendering;
             mats = render.sharedMaterials;
             //render.enabled = false;
 
+
             UpdateTransformList();
         }
+
         public void Clear()
         {
             transformList.Clear();
@@ -86,12 +88,10 @@ using UnityEngine.Rendering;
         }
 
         bool IsRendererValid() => render && 
-            render.isVisible &&
             render.gameObject.activeInHierarchy && 
             mesh;
 
-        // Update is called once per frame
-        void Update()
+        void LateUpdate()
         {
             if (!IsRendererValid())
                 return;
@@ -106,12 +106,12 @@ using UnityEngine.Rendering;
                 if (i > mats.Length)
                     break;
 
-                DrawInstanced(i, mats[i]);
+                DrawInstanced(mesh,i, mats[i]);
             }
 
         }
 
-        void DrawInstanced(int subMeshId, Material mat)
+        void DrawInstanced(Mesh mesh,int subMeshId, Material mat)
         {
             if (!mat.enableInstancing)
             {
