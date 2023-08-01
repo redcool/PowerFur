@@ -43,7 +43,7 @@ namespace PowerUtilities
             {
                 transformList.Clear(); offsetList.Clear();
             }
-            public bool IsValid() => renderer;
+            public bool IsValid() => renderer && renderer.isVisible;
         }
 
         [Header("Shader Variables")]
@@ -63,14 +63,14 @@ namespace PowerUtilities
 
         [Header("Debug Info")]
         public List<DrawInfo> drawInfoList = new List<DrawInfo>();
-
+        public bool hasSkinned;
         // Start is called before the first frame update
         public void OnEnable()
         {
             if (block == null)
                 block = new MaterialPropertyBlock();
 
-            SetupDrawInfos();
+            hasSkinned = SetupDrawInfos();
         }
 
         public void OnDisable()
@@ -78,26 +78,45 @@ namespace PowerUtilities
             drawInfoList.Clear();
         }
 
-        public void SetupDrawInfos()
+        public bool SetupDrawInfos()
         {
+            var hasSkinned = false;
             drawInfoList.Clear();
             var renders = GetComponentsInChildren<Renderer>();
-            drawInfoList = renders.Select(r => new DrawInfo
+            foreach (Renderer r in renders)
             {
-                renderer = r,
-                materials = r.sharedMaterials,
-                mesh = r.GetComponent<MeshFilter>()?.sharedMesh,
+                var info = new DrawInfo
+                {
+                    renderer = r,
+                    materials = r.sharedMaterials,
+                };
+                drawInfoList.Add(info);
+
+                if (r.TryGetComponent<MeshFilter>(out var filter))
+                    info.mesh = filter.sharedMesh;
+                else
+                    info.mesh = new Mesh();
+
+                hasSkinned = r is SkinnedMeshRenderer;
             }
-            ).ToList();
+            return hasSkinned;
         }
 
 
-        private void UpdateTransformList()
+        private void UpdateDrawInfoList()
         {
-            drawInfoList = drawInfoList.Where(info => info.IsValid()).ToList();
+            //drawInfoList = drawInfoList.Where(info => info.IsValid()).ToList();
 
             foreach (var drawInfo in drawInfoList)
             {
+                if (!drawInfo.IsValid())
+                    continue;
+
+                if(drawInfo.renderer is SkinnedMeshRenderer skinned)
+                {
+                    skinned.BakeMesh(drawInfo.mesh, true);
+                }
+
                 drawInfo.transformList.Clear();
                 drawInfo.offsetList.Clear();
 
@@ -111,9 +130,9 @@ namespace PowerUtilities
 
         void LateUpdate()
         {
-            if (transform.hasChanged)
+            if (transform.hasChanged || hasSkinned)
             {
-                UpdateTransformList();
+                UpdateDrawInfoList();
             }
 
             DrawInstancedObjects();
@@ -124,6 +143,10 @@ namespace PowerUtilities
             for (int i = 0; i < drawInfoList.Count; i++)
             {
                 var drawInfo = drawInfoList[i];
+
+                if (!drawInfo.IsValid())
+                    continue;
+
                 for (int j = 0; j<drawInfo.mesh.subMeshCount; j++)
                 {
                     if (j >= drawInfo.materials.Length)
