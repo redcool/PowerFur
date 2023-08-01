@@ -1,14 +1,14 @@
-namespace PowerUtilities {
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Rendering;
+namespace PowerUtilities
+{
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+    using UnityEngine.Rendering;
+    using System.Linq;
 
 #if UNITY_EDITOR
     using UnityEditor;
-    using System.Linq;
-    using static PowerUtilities.DrawFurObjectInstanced;
 
     [CustomEditor(typeof(DrawFurObjectInstanced))]
     public class DrawFurObjectInstancedEditor : Editor
@@ -72,11 +72,11 @@ using UnityEngine.Rendering;
             drawInfoList.Clear();
             var renders = GetComponentsInChildren<Renderer>();
             drawInfoList = renders.Select(r => new DrawInfo
-                {
-                    renderer = r,
-                    materials = r.sharedMaterials,
-                    mesh = r.GetComponent<MeshFilter>()?.sharedMesh,
-                }
+            {
+                renderer = r,
+                materials = r.sharedMaterials,
+                mesh = r.GetComponent<MeshFilter>()?.sharedMesh,
+            }
             ).ToList();
         }
 
@@ -126,7 +126,7 @@ using UnityEngine.Rendering;
             }
         }
 
-        void DrawInstanced(Mesh mesh,int subMeshId, Material mat,List<Matrix4x4> transformList, List<float> offsets)
+        void DrawInstanced(Mesh mesh, int subMeshId, Material mat, List<Matrix4x4> transformList, List<float> offsets)
         {
             if (!mat.enableInstancing)
             {
