@@ -38,6 +38,12 @@ namespace PowerUtilities
             public Mesh mesh;
             public List<Matrix4x4> transformList = new List<Matrix4x4>();
             public List<float> offsetList = new List<float>();
+
+            public void Clear()
+            {
+                transformList.Clear(); offsetList.Clear();
+            }
+            public bool IsValid() => renderer;
         }
 
         [Header("Shader Variables")]
@@ -64,7 +70,12 @@ namespace PowerUtilities
             if (block == null)
                 block = new MaterialPropertyBlock();
 
+            SetupDrawInfos();
+        }
 
+        public void OnDisable()
+        {
+            drawInfoList.Clear();
         }
 
         public void SetupDrawInfos()
@@ -83,6 +94,8 @@ namespace PowerUtilities
 
         private void UpdateTransformList()
         {
+            drawInfoList = drawInfoList.Where(info => info.IsValid()).ToList();
+
             foreach (var drawInfo in drawInfoList)
             {
                 drawInfo.transformList.Clear();
@@ -95,10 +108,6 @@ namespace PowerUtilities
                 }
             }
         }
-
-        bool IsRendererValid() => drawInfoList.Count > 0 &&
-            gameObject.activeInHierarchy
-            ;
 
         void LateUpdate()
         {
