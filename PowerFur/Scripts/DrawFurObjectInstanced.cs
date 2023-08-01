@@ -7,6 +7,9 @@ using UnityEngine.Rendering;
 
 #if UNITY_EDITOR
     using UnityEditor;
+    using System.Linq;
+    using static PowerUtilities.DrawFurObjectInstanced;
+
     [CustomEditor(typeof(DrawFurObjectInstanced))]
     public class DrawFurObjectInstancedEditor : Editor
     {
@@ -27,6 +30,16 @@ using UnityEngine.Rendering;
     [ExecuteInEditMode]
     public class DrawFurObjectInstanced : MonoBehaviour
     {
+        [Serializable]
+        public class DrawInfo
+        {
+            public Renderer renderer;
+            public Material[] materials;
+            public Mesh mesh;
+            public List<Matrix4x4> transformList = new List<Matrix4x4>();
+            public List<float> offsetList = new List<float>();
+        }
+
         [Header("Shader Variables")]
         public string _FurOffset = nameof(_FurOffset);
 
@@ -40,14 +53,10 @@ using UnityEngine.Rendering;
 
         [Min(0)] public int drawCount = 11;
 
-        [Header("Sub Meshes")]
-        List<Matrix4x4> transformList = new List<Matrix4x4>();
-        List<float> offsets = new List<float>();
-
-        Mesh mesh;
-        Renderer render;
-        Material[] mats;
         static MaterialPropertyBlock block;
+
+        [Header("Debug Info")]
+        public List<DrawInfo> drawInfoList = new List<DrawInfo>();
 
         // Start is called before the first frame update
         public void OnEnable()
@@ -55,63 +64,69 @@ using UnityEngine.Rendering;
             if (block == null)
                 block = new MaterialPropertyBlock();
 
-            if (!TryGetComponent<MeshFilter>(out var mf))
-                return;
 
-            if (!TryGetComponent(out render))
-                return;
-
-            mesh = mf.sharedMesh;
-            mats = render.sharedMaterials;
-            //render.enabled = false;
-
-
-            UpdateTransformList();
         }
 
-        public void Clear()
+        public void SetupDrawInfos()
         {
-            transformList.Clear();
-            offsets.Clear();
+            drawInfoList.Clear();
+            var renders = GetComponentsInChildren<Renderer>();
+            drawInfoList = renders.Select(r => new DrawInfo
+                {
+                    renderer = r,
+                    materials = r.sharedMaterials,
+                    mesh = r.GetComponent<MeshFilter>()?.sharedMesh,
+                }
+            ).ToList();
         }
 
 
         private void UpdateTransformList()
         {
-            Clear();
-            for (int i = 0; i < drawCount; i++)
+            foreach (var drawInfo in drawInfoList)
             {
-                transformList.Add(transform.localToWorldMatrix);
-                offsets.Add(baseScale + i * stepScale);
-            }
+                drawInfo.transformList.Clear();
+                drawInfo.offsetList.Clear();
 
+                for (int i = 0; i < drawCount; i++)
+                {
+                    drawInfo.transformList.Add(drawInfo.renderer.transform.localToWorldMatrix);
+                    drawInfo.offsetList.Add(baseScale + i * stepScale);
+                }
+            }
         }
 
-        bool IsRendererValid() => render && 
-            render.gameObject.activeInHierarchy && 
-            mesh;
+        bool IsRendererValid() => drawInfoList.Count > 0 &&
+            gameObject.activeInHierarchy
+            ;
 
         void LateUpdate()
         {
-            if (!IsRendererValid())
-                return;
-
             if (transform.hasChanged)
             {
                 UpdateTransformList();
             }
 
-            for (int i = 0; i < mesh.subMeshCount; i++)
-            {
-                if (i > mats.Length)
-                    break;
-
-                DrawInstanced(mesh,i, mats[i]);
-            }
-
+            DrawInstancedObjects();
         }
 
-        void DrawInstanced(Mesh mesh,int subMeshId, Material mat)
+        public void DrawInstancedObjects()
+        {
+            for (int i = 0; i < drawInfoList.Count; i++)
+            {
+                var drawInfo = drawInfoList[i];
+                for (int j = 0; j<drawInfo.mesh.subMeshCount; j++)
+                {
+                    if (j >= drawInfo.materials.Length)
+                        break;
+
+                    if (drawInfo.mesh)
+                        DrawInstanced(drawInfo.mesh, j, drawInfo.materials[j], drawInfo.transformList, drawInfo.offsetList);
+                }
+            }
+        }
+
+        void DrawInstanced(Mesh mesh,int subMeshId, Material mat,List<Matrix4x4> transformList, List<float> offsets)
         {
             if (!mat.enableInstancing)
             {

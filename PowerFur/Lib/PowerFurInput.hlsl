@@ -15,7 +15,6 @@
         float4 uv : TEXCOORD0;
         float fogCoord:TEXCOORD1;
         float3 diffColor:TEXCOORD2;
-
         float3 worldPos:TEXCOORD3;
         float3 worldNormal :TEXCOORD4;
         UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -53,8 +52,10 @@ UNITY_INSTANCING_BUFFER_START(UnityPerMaterial)
     UNITY_DEFINE_INSTANCED_PROP(float,_LightOn)
     UNITY_DEFINE_INSTANCED_PROP(float,_Roughness)
     UNITY_DEFINE_INSTANCED_PROP(float,_Metallic)
-    // UNITY_DEFINE_INSTANCED_PROP(float,_Cutoff)
+    UNITY_DEFINE_INSTANCED_PROP(float,_Cutoff)
     UNITY_DEFINE_INSTANCED_PROP(float,_FurEdgeMode)
+    UNITY_DEFINE_INSTANCED_PROP(float,_RimIntensity)
+    
     #if !defined(MULTI_PASS)
     UNITY_DEFINE_INSTANCED_PROP(float,_FurOffset)
     #endif
@@ -87,8 +88,9 @@ UNITY_INSTANCING_BUFFER_END(UnityPerMaterial)
 #define _LightOn UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_LightOn)
 #define _Roughness UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_Roughness)
 #define _Metallic UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_Metallic)
-// #define _Cutoff UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_Cutoff)
+#define _Cutoff UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_Cutoff)
 #define _FurEdgeMode UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_FurEdgeMode)
+#define _RimIntensity UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_RimIntensity)
 
 // instance version vs multipass
 #if !defined(MULTI_PASS)

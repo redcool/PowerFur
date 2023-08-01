@@ -43,12 +43,17 @@
         [GroupItem(Light)]_Metallic("_Metallic",range(0,1)) = 0
         [GroupItem(Light)]_Roughness("_Roughness",range(0,1)) = 0.5
 
+        [Group(Rim)]
+        [GroupItem]_RimIntensity("_RimIntensity",range(0,3)) = 1
+
         [Group(Settings)]
         [GroupToggle(Settings)]_ZWrite("_ZWrite",int) = 1
         [GroupEnum(Settings,UnityEngine.Rendering.CullMode)]_CullMode("_CullMode",float) = 2
         [GroupEnum(Settings,Normal 0 Soft 1)]_FurEdgeMode("_FurEdgeMode",float) = 0
         
-        // _Cutoff("_Cutoff",range(0,1)) = 0.5
+        // [Group(Alpha)]
+        // [GroupToggle(Alpha,_ALPHA_TEST)]_CutoffOn("_CutoffOn",int) = 0
+        // [GroupItem(Alpha)]_Cutoff("_Cutoff",range(0,1)) = 0.5
 
         [HideInInspector]_FurOffset("_FurOffset",Float) = 0
     }
@@ -65,6 +70,7 @@
             #pragma vertex vert
             #pragma fragment frag
             #pragma multi_compile_instancing
+            // #pragma shader_feature _ALPHA_TEST
             #define UnityPerMaterial _UnityPerMaterial
             // #define USE_URP
             #include "Lib/PowerFurPass.hlsl"

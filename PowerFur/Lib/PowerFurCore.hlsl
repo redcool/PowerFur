@@ -34,7 +34,7 @@
         float a2 = a*a;
         nl = saturate(dot(normal,l));
 
-        float specTerm = CalcSpec(l,v,normal,a,a2) ;
+        float3 specTerm = CalcSpec(l,v,normal,a,a2) ;
         specColor = specTerm * lerp(0.04, albedo,metallic)* nl;
         diffColor = albedo * saturate(1 - metallic)* nl;
     }
