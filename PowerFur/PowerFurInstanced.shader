@@ -44,16 +44,36 @@
         [GroupItem(Light)]_Roughness("_Roughness",range(0,1)) = 0.5
 
         [Group(Rim)]
-        [GroupItem]_RimIntensity("_RimIntensity",range(0,3)) = 1
+        [GroupItem(Rim)]_RimIntensity("_RimIntensity",range(0,3)) = 1
 
-        [Group(Settings)]
-        [GroupToggle(Settings)]_ZWrite("_ZWrite",int) = 1
-        [GroupEnum(Settings,UnityEngine.Rendering.CullMode)]_CullMode("_CullMode",float) = 2
-        [GroupEnum(Settings,Normal 0 Soft 1)]_FurEdgeMode("_FurEdgeMode",float) = 0
-        
-        // [Group(Alpha)]
-        // [GroupToggle(Alpha,_ALPHA_TEST)]_CutoffOn("_CutoffOn",int) = 0
-        // [GroupItem(Alpha)]_Cutoff("_Cutoff",range(0,1)) = 0.5
+        [Group(Edge)]
+        [GroupEnum(Edge,Normal 0 Soft 1)]_FurEdgeMode("_FurEdgeMode",float) = 0
+// ================================================== StateSettings
+        [Group(StateSettings)]
+
+        [GroupEnum(StateSettings,UnityEngine.Rendering.CullMode)]_CullMode("_CullMode",int) = 2
+		[GroupToggle(StateSettings)]_ZWriteMode("ZWriteMode",int) = 0
+        /*
+		Disabled,Never,Less,Equal,LessEqual,Greater,NotEqual,GreaterEqual,Always
+		*/
+		[GroupEnum(StateSettings,UnityEngine.Rendering.CompareFunction)]_ZTestMode("_ZTestMode",float) = 4        
+// ================================================== alpha        
+        [Group(Alpha)]
+        [GroupHeader(Alpha,AlphaTest)]
+        [GroupToggle(Alpha,ALPHA_TEST)]_AlphaTestOn("_AlphaTestOn",int) = 0
+        [GroupSlider(Alpha)]_Cutoff("_Cutoff",range(0,1)) = 0.5
+
+        [GroupHeader(Alpha,BlendMode)]
+        [GroupPresetBlendMode(Alpha,,_SrcMode,_DstMode)]_PresetBlendMode("_PresetBlendMode",int)=0
+        [HideInInspector]_SrcMode("_SrcMode",int) = 1
+        [HideInInspector]_DstMode("_DstMode",int) = 0        
+// ================================================== stencil settings
+        [Group(Stencil)]
+		[GroupEnum(Stencil,UnityEngine.Rendering.CompareFunction)]_StencilComp ("Stencil Comparison", Float) = 0
+        [GroupItem(Stencil)]_Stencil ("Stencil ID", int) = 0
+        [GroupEnum(Stencil,UnityEngine.Rendering.StencilOp)]_StencilOp ("Stencil Operation", Float) = 0
+        [HideInInspector] _StencilWriteMask ("Stencil Write Mask", Float) = 255
+        [HideInInspector] _StencilReadMask ("Stencil Read Mask", Float) = 255
 
         [HideInInspector]_FurOffset("_FurOffset",Float) = 0
     }
@@ -61,16 +81,30 @@
     SubShader
     {
 		Tags { "RenderType"="Transparent" "Queue" = "Transparent" }
-		Blend SrcAlpha OneMinusSrcAlpha
-        // blend srcAlpha one
-        zwrite[_ZWrite]
-        cull [_CullMode]
+
+        Stencil
+        {
+            Ref [_Stencil]
+            Comp [_StencilComp]
+            Pass [_StencilOp]
+            ReadMask [_StencilReadMask]
+            WriteMask [_StencilWriteMask]
+        }
         pass{
+            ZWrite[_ZWriteMode]
+			Blend [_SrcMode][_DstMode]
+			// BlendOp[_BlendOp]
+			Cull[_CullMode]
+			ztest[_ZTestMode]
+			// ColorMask [_ColorMask]
+
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
             #pragma multi_compile_instancing
-            // #pragma shader_feature _ALPHA_TEST
+            #pragma shader_feature ALPHA_TEST
+
+
             #define UnityPerMaterial _UnityPerMaterial
             // #define USE_URP
             #include "Lib/PowerFurPass.hlsl"

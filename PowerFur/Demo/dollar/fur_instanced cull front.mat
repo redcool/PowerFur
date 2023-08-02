@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: fur_instanced
+  m_Name: fur_instanced cull front
   m_Shader: {fileID: 4800000, guid: f34259b6de8dd404180844a0493fc03a, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
@@ -43,6 +43,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DetailPBRMaskMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -55,11 +59,23 @@ Material:
         m_Texture: {fileID: 2800000, guid: 7bf833574703d114c99b09228f302f95, type: 3}
         m_Scale: {x: 5, y: 5}
         m_Offset: {x: 0, y: 0}
+    - _IBLCube:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 924b49fe1491e044c950ae680c2eb443, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicMaskMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -71,7 +87,15 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RippleTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _StoreyLineNoiseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -90,41 +114,108 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
+    - _AlphaPremultiply: 0
     - _AlphaTestOn: 0
+    - _ApplyEdgeOn: 1
     - _Blend: 0
+    - _BoxProjectionOn: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
+    - _ClipOn: 0
+    - _ColorMask: 15
     - _Cull: 2
-    - _CullMode: 2
-    - _Cutoff: 0.11
+    - _CullMode: 1
+    - _CustomLightColorUsage: 0
+    - _CustomLightOn: 0
+    - _Cutoff: 0.5
+    - _CutoffOn: 0
+    - _DebugDisplay: 0
+    - _DepthFogOn: 1
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _DetailOn: 0
+    - _DetailPBRMetallic: 1
+    - _DetailPBROcclusion: 1
+    - _DetailPBRSmoothness: 1
+    - _DetailPbrMaskApplyMetallic: 1
+    - _DetailPbrMaskApplyOcclusion: 1
+    - _DetailPbrMaskApplySmoothness: 1
+    - _DetailUVUseWorldPos: 1
+    - _DetailWorldPlaneMode: 0
+    - _DetailWorldPosTriplanar: 0
     - _DstBlend: 0
     - _DstMode: 10
+    - _EmissionHeightColorNormalAttenOn: 1
+    - _EmissionHeightOn: 0
+    - _EmissionOn: 0
+    - _EmissionScanLineOn: 0
+    - _EnvIntensity: 1
     - _EnvironmentReflections: 1
     - _FlowMapIntensity: 6.75
     - _FlowMapOn: 0
+    - _FogNoiseOn: 0
+    - _FogOn: 1
     - _FragmentAOOn: 1
+    - _FresnelIntensity: 1
     - _FurEdgeMode: 1
     - _FurOffset: 0
+    - _GIApplyMainLightShadow: 0
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
+    - _HeightFogOn: 1
+    - _IBLMaskMainTexA: 0
+    - _IBLOn: 0
+    - _InvertSmoothnessOn: 0
+    - _IsReceiveShadowOff: 0
+    - _LMIntensityAdditional: 1
+    - _LMSaturateAdditional: 0
     - _Length: 0.58
     - _LightOn: 0
+    - _LightmapSHAdditional: 0
     - _Metallic: 0.382
+    - _MetallicChannel: 0
     - _Mode: 0
+    - _NormalScale: 1
+    - _Occlusion: 0.5
+    - _OcclusionChannel: 2
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _ParallaxHeight: 0.01
+    - _ParallaxInVSOn: 0
+    - _ParallaxIterate: 1
+    - _ParallaxMapChannel: 3
+    - _ParallaxOn: 0
+    - _PlanarReflectionOn: 0
+    - _PlanarReflectionReverseUVX: 0
     - _PresetBlendMode: 0
     - _QueueOffset: 0
+    - _RainFlowIntensity: 0.5
+    - _RainHeight: 5
+    - _RainIntensity: 1
+    - _RainMaskFrom: 0
+    - _RainMetallic: 0.1
+    - _RainOn: 0
+    - _RainReflectIntensity: 0.5
+    - _RainSlopeAtten: 0.5
+    - _RainSmoothness: 0.1
     - _ReceiveShadows: 1
+    - _ReflectMode: 0
     - _Rigidness: 0
     - _RimIntensity: 1
+    - _RippleAlbedoIntensity: 0.1
+    - _RippleBlendNormalOn: 0
+    - _RippleIntensity: 1
+    - _RippleOffsetAutoStop: 0
+    - _RippleSpeed: 10
     - _Roughness: 0.371
+    - _ScreenShadowOn: 0
     - _Smoothness: 0.5
+    - _SmoothnessChannel: 1
     - _SmoothnessTextureChannel: 0
+    - _SnowIntensity: 0
+    - _SnowOn: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcMode: 5
@@ -133,25 +224,45 @@ Material:
     - _StencilOp: 0
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
+    - _StoreyHeight: 1
+    - _StoreyLightOpaque: 1
+    - _StoreyLightSwitchSpeed: 0
+    - _StoreyLineOn: 0
+    - _StoreyTilingOn: 0
     - _Surface: 0
-    - _ThicknessMax: 1.79
+    - _SurfaceDepth: -1
+    - _ThicknessMax: 1.27
     - _ThicknessMin: 0
     - _UVSec: 0
-    - _VertexAOOn: 0
+    - _VertexAOOn: 1
     - _VertexOffsetAttenUseFurMaskY: 0
     - _WindOn: 0
-    - _WindScale: 1.36
+    - _WindScale: 14.92
+    - _WindSpeed: 0.3
     - _WorkflowMode: 1
-    - _ZTestMode: 4
+    - _ZTest: 4
+    - _ZTestMode: 8
     - _ZWrite: 1
     - _ZWriteMode: 0
     m_Colors:
     - _BaseColor: {r: 0.79073066, g: 0.79073066, b: 0.79073066, a: 1}
+    - _BelowColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color1: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
-    - _Color2: {r: 2.098455, g: 2.098455, b: 2.098455, a: 1}
+    - _Color1: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 1}
+    - _Color2: {r: 4.867144, g: 4.867144, b: 4.867144, a: 1}
+    - _CustomLightColor: {r: 0, g: 0, b: 0, a: 0}
+    - _CustomLightDir: {r: 0, g: 1, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionHeight: {r: 0, g: 0, b: 0, a: 0}
+    - _EmissionHeightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RainColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _RainReflectDirOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _RainReflectTilingOffset: {r: 50, g: 50, b: 10, a: 10}
+    - _ReflectDirOffset: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _StoreyLineColor: {r: 1, g: 1, b: 1, a: 1}
+    - _StoreyWindowInfo: {r: 5, g: 2, b: 0.5, a: 0.8}
+    - _WindAnimParam: {r: 1, g: 1, b: 0.1, a: 0.3}
     - _WindDir: {r: 0, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &2109637136683888363

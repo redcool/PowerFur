@@ -21,20 +21,19 @@
         if(_VertexOffsetAttenUseFurMaskY){
             vertexOffsetAtten = furMask.y;
         }
+        float3 normal = normalize(TransformObjectToWorldNormal(v.normal));
+        float3 worldPos = TransformObjectToWorld(v.vertex);
 
         // vertex offset
-        float3 pos = v.vertex.xyz + v.normal * _FurOffset * _Length * vertexOffsetAtten * 0.2;
+        worldPos += normal * _FurOffset * _Length * vertexOffsetAtten * 0.2;
         // add gravity
-        pos.y += clamp(_Rigidness,-3,3) * pow(_FurOffset,3) * _Length * vertexOffsetAtten;
+        worldPos.y += clamp(_Rigidness,-3,3) * pow(_FurOffset,3) * _Length * vertexOffsetAtten;
         
         // apply wind in world space
-        // float3 worldPos = mul(UNITY_MATRIX_M,float4(pos,1));
-        float3 worldPos = TransformObjectToWorld(pos);
         if(_WindOn){
             worldPos = CalcWind(worldPos,_WindDir,_WindScale);
         }
 
-        // o.vertex = mul(UNITY_MATRIX_VP,float4(worldPos,1));
         o.vertex = TransformWorldToHClip(worldPos);
         o.uv.xy = mainUV;
         // _FurMaskMap_ST uv offset
@@ -45,7 +44,7 @@
         o.fogCoord = ComputeFogFactor(o.vertex.z);
 
         // diffuse color
-        float3 normal = TransformObjectToWorldNormal(v.normal);
+
         float3 lightDir = UnityWorldSpaceLightDir(worldPos);
         float3 viewDir = GetWorldSpaceViewDir(worldPos);
         float nl = saturate(dot(lightDir,normal));
@@ -121,7 +120,7 @@
         float a = smoothstep(_ThicknessMin,_ThicknessMax, alphaModes[_FurEdgeMode]);
         a = saturate(a);
 
-        #if defined(_ALPHA_TEST)
+        #if defined(ALPHA_TEST)
             clip(a-_Cutoff-0.0001);
         #endif
 

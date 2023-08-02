@@ -34,7 +34,6 @@ namespace PowerUtilities
         public class DrawInfo
         {
             public Renderer renderer;
-            public Material[] materials;
             public Mesh mesh;
             public List<Matrix4x4> transformList = new List<Matrix4x4>();
             public List<float> offsetList = new List<float>();
@@ -43,8 +42,13 @@ namespace PowerUtilities
             {
                 transformList.Clear(); offsetList.Clear();
             }
-            public bool IsValid() => renderer && renderer.isVisible;
+            public bool IsValid() => renderer;// && renderer.isVisible;
         }
+
+        [Header("Visible")]
+        public bool isHiddenRenderer = false;
+        [Tooltip("2 materials for alpha sort")]
+        public Material[] furMaterials;
 
         [Header("Shader Variables")]
         public string _FurOffset = nameof(_FurOffset);
@@ -59,11 +63,12 @@ namespace PowerUtilities
 
         [Min(0)] public int drawCount = 11;
 
-        static MaterialPropertyBlock block;
 
         [Header("Debug Info")]
         public List<DrawInfo> drawInfoList = new List<DrawInfo>();
         public bool hasSkinned;
+
+        static MaterialPropertyBlock block;
         // Start is called before the first frame update
         public void OnEnable()
         {
@@ -82,13 +87,14 @@ namespace PowerUtilities
         {
             var hasSkinned = false;
             drawInfoList.Clear();
-            var renders = GetComponentsInChildren<Renderer>();
+            var renders = GetComponentsInChildren<Renderer>(false);
             foreach (Renderer r in renders)
             {
+                r.enabled = !isHiddenRenderer;
+
                 var info = new DrawInfo
                 {
                     renderer = r,
-                    materials = r.sharedMaterials,
                 };
                 drawInfoList.Add(info);
 
@@ -97,7 +103,7 @@ namespace PowerUtilities
                 else
                     info.mesh = new Mesh();
 
-                hasSkinned = r is SkinnedMeshRenderer;
+                hasSkinned = hasSkinned || (r is SkinnedMeshRenderer);
             }
             return hasSkinned;
         }
@@ -105,8 +111,6 @@ namespace PowerUtilities
 
         private void UpdateDrawInfoList()
         {
-            //drawInfoList = drawInfoList.Where(info => info.IsValid()).ToList();
-
             foreach (var drawInfo in drawInfoList)
             {
                 if (!drawInfo.IsValid())
@@ -135,11 +139,14 @@ namespace PowerUtilities
                 UpdateDrawInfoList();
             }
 
-            DrawInstancedObjects();
+            DrawInstancedObjects(_FurOffset, drawInfoList, furMaterials);
         }
 
-        public void DrawInstancedObjects()
+        public static void DrawInstancedObjects(string furOffsetName, List<DrawInfo> drawInfoList, Material[] furMaterials)
         {
+            if (furMaterials == null || furMaterials.Length==0 || !furMaterials[0])
+                return;
+
             for (int i = 0; i < drawInfoList.Count; i++)
             {
                 var drawInfo = drawInfoList[i];
@@ -149,16 +156,19 @@ namespace PowerUtilities
 
                 for (int j = 0; j<drawInfo.mesh.subMeshCount; j++)
                 {
-                    if (j >= drawInfo.materials.Length)
-                        break;
+                    //if (j >= drawInfo.materials.Length)
+                    //    break;
 
                     if (drawInfo.mesh)
-                        DrawInstanced(drawInfo.mesh, j, drawInfo.materials[j], drawInfo.transformList, drawInfo.offsetList);
+                    {
+                        for (int k = 0; k < furMaterials.Length; k++)
+                            DrawInstanced(furOffsetName, drawInfo.mesh, j, furMaterials[k], drawInfo.transformList, drawInfo.offsetList);
+                    }
                 }
             }
         }
 
-        void DrawInstanced(Mesh mesh, int subMeshId, Material mat, List<Matrix4x4> transformList, List<float> offsets)
+        public static void DrawInstanced(string furOffsetName,Mesh mesh, int subMeshId, Material mat, List<Matrix4x4> transformList, List<float> offsets)
         {
             if (!mat.enableInstancing)
             {
@@ -169,7 +179,7 @@ namespace PowerUtilities
                 return;
             }
 
-            block.SetFloatArray(_FurOffset, offsets);
+            block.SetFloatArray(furOffsetName, offsets);
             Graphics.DrawMeshInstanced(mesh, subMeshId, mat, transformList, block);
         }
     }
