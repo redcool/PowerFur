@@ -42,27 +42,57 @@
         [GroupToggle(Light)]_LightOn("_LightOn",int) = 0
         [GroupItem(Light)]_Metallic("_Metallic",range(0,1)) = 0
         [GroupItem(Light)]_Roughness("_Roughness",range(0,1)) = 0.5
+        
+        [Group(Rim)]
+        [GroupItem(Rim)]_RimIntensity("_RimIntensity",range(0,3)) = 1
 
-        [Group(Settings)]
-        [GroupToggle(Settings)]_ZWrite("_ZWrite",int) = 1
-        [GroupEnum(Settings,UnityEngine.Rendering.CullMode)]_CullMode("_CullMode",float) = 2
-        [GroupEnum(Settings,Normal 0 Soft 1)]_FurEdgeMode("_FurEdgeMode",float) = 0
+        [Group(Edge)]
+        [GroupEnum(Edge,Normal 0 Soft 1)]_FurEdgeMode("_FurEdgeMode",float) = 0
+// ================================================== StateSettings
+        [Group(StateSettings)]
+
+        [GroupEnum(StateSettings,UnityEngine.Rendering.CullMode)]_CullMode("_CullMode",int) = 2
+		[GroupToggle(StateSettings)]_ZWriteMode("ZWriteMode",int) = 0
+        /*
+		Disabled,Never,Less,Equal,LessEqual,Greater,NotEqual,GreaterEqual,Always
+		*/
+		[GroupEnum(StateSettings,UnityEngine.Rendering.CompareFunction)]_ZTestMode("_ZTestMode",float) = 4        
+// ================================================== alpha        
+        [Group(Alpha)]
+        [GroupHeader(Alpha,AlphaTest)]
+        [GroupToggle(Alpha,ALPHA_TEST)]_AlphaTestOn("_AlphaTestOn",int) = 0
+        [GroupSlider(Alpha)]_Cutoff("_Cutoff",range(0,1)) = 0.5
+
+        [GroupHeader(Alpha,BlendMode)]
+        [GroupPresetBlendMode(Alpha,,_SrcMode,_DstMode)]_PresetBlendMode("_PresetBlendMode",int)=0
+        [HideInInspector]_SrcMode("_SrcMode",int) = 1
+        [HideInInspector]_DstMode("_DstMode",int) = 0        
+// ================================================== stencil settings
+        [Group(Stencil)]
+		[GroupEnum(Stencil,UnityEngine.Rendering.CompareFunction)]_StencilComp ("Stencil Comparison", Float) = 0
+        [GroupStencil(Stencil)] _Stencil ("Stencil ID", int) = 0
+        [GroupEnum(Stencil,UnityEngine.Rendering.StencilOp)]_StencilOp ("Stencil Operation", Float) = 0
+        [HideInInspector] _StencilWriteMask ("Stencil Write Mask", Float) = 255
+        [HideInInspector] _StencilReadMask ("Stencil Read Mask", Float) = 255
+
+        // [HideInInspector]_FurOffset("_FurOffset",Float) = 0
     }
-
 
     SubShader
     {
 		Tags { "RenderType"="Transparent" "Queue" = "Transparent" }
-		Blend SrcAlpha OneMinusSrcAlpha
+		Blend [_SrcMode] [_DstMode]
         zwrite [_ZWrite]
         cull [_CullMode]
-        // blend srcAlpha one
+
         pass{
             Tags{"LightMode"="FurPass0"}
+            zwrite on
             HLSLPROGRAM
             #define _FurOffset 0.05
             #pragma vertex vert
             #pragma fragment frag
+            #pragma shader_feature ALPHA_TEST
             #define MULTI_PASS  
             #include "Lib/PowerFurPass.hlsl"
             ENDHLSL
@@ -74,6 +104,7 @@
             #define _FurOffset 0.1
             #pragma vertex vert
             #pragma fragment frag
+            #pragma shader_feature ALPHA_TEST
             #define MULTI_PASS  
             #include "Lib/PowerFurPass.hlsl"
             ENDHLSL
@@ -85,6 +116,7 @@
             #define _FurOffset 0.13
             #pragma vertex vert
             #pragma fragment frag
+            #pragma shader_feature ALPHA_TEST
             #define MULTI_PASS  
             #include "Lib/PowerFurPass.hlsl"            
             ENDHLSL
@@ -95,6 +127,7 @@
             #define _FurOffset 0.16
             #pragma vertex vert
             #pragma fragment frag
+            #pragma shader_feature ALPHA_TEST
             #define MULTI_PASS  
             #include "Lib/PowerFurPass.hlsl"            
             ENDHLSL
@@ -106,6 +139,7 @@
             #define _FurOffset 0.19
             #pragma vertex vert
             #pragma fragment frag
+            #pragma shader_feature ALPHA_TEST
             #define MULTI_PASS  
             #include "Lib/PowerFurPass.hlsl"            
             ENDHLSL
@@ -117,6 +151,7 @@
             #define _FurOffset 0.22
             #pragma vertex vert
             #pragma fragment frag
+            #pragma shader_feature ALPHA_TEST
             #define MULTI_PASS  
             #include "Lib/PowerFurPass.hlsl"            
             ENDHLSL
@@ -127,6 +162,7 @@
             #define _FurOffset 0.25
             #pragma vertex vert
             #pragma fragment frag
+            #pragma shader_feature ALPHA_TEST
             #define MULTI_PASS  
             #include "Lib/PowerFurPass.hlsl"            
             ENDHLSL
@@ -137,6 +173,7 @@
             #define _FurOffset 0.28
             #pragma vertex vert
             #pragma fragment frag
+            #pragma shader_feature ALPHA_TEST
             #define MULTI_PASS  
             #include "Lib/PowerFurPass.hlsl"            
             ENDHLSL
@@ -147,6 +184,7 @@
             #define _FurOffset 0.31
             #pragma vertex vert
             #pragma fragment frag
+            #pragma shader_feature ALPHA_TEST
             #define MULTI_PASS  
             #include "Lib/PowerFurPass.hlsl"            
             ENDHLSL
@@ -157,6 +195,7 @@
             #define _FurOffset 0.34
             #pragma vertex vert
             #pragma fragment frag
+            #pragma shader_feature ALPHA_TEST
             #define MULTI_PASS  
             #include "Lib/PowerFurPass.hlsl"            
             ENDHLSL
@@ -167,6 +206,7 @@
             #define _FurOffset 0.37
             #pragma vertex vert
             #pragma fragment frag
+            #pragma shader_feature ALPHA_TEST
             #define MULTI_PASS 
             #include "Lib/PowerFurPass.hlsl"            
             ENDHLSL
@@ -184,10 +224,11 @@
             HLSLPROGRAM
             //--------------------------------------
             // GPU Instancing
-            #pragma multi_compile_instancing
+            // #pragma multi_compile_instancing
 
             #pragma vertex vert
             #pragma fragment frag
+            #pragma shader_feature ALPHA_TEST
 
             // -------------------------------------
             // This is used during shadow map generation to differentiate between directional and punctual light shadows, as they use different formulas to apply Normal Bias
@@ -196,6 +237,8 @@
             #pragma shader_feature_local_fragment ALPHA_TEST
 
 			#include "../../PowerShaderLib/Lib/UnityLib.hlsl"
+            #define _FurOffset 0.37
+            #define MULTI_PASS 
 			#include "Lib/PowerFurPass.hlsl"
 			#define SHADOW_PASS
 			#define USE_SAMPLER2D

@@ -9,6 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: fur_multipass
   m_Shader: {fileID: 4800000, guid: 0b4efefe4df216b48a972f9ec3828e83, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _FRAGMENTAOON_ON
@@ -17,9 +19,10 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -90,16 +93,18 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
+    - _AlphaTestOn: 0
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _CullMode: 2
-    - _Cutoff: 0.09
+    - _Cutoff: 0.083
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _DstMode: 10
     - _EnvironmentReflections: 1
     - _FlowMapIntensity: 6.75
     - _FlowMapOn: 0
@@ -115,28 +120,38 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _PresetBlendMode: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Rigidness: 0
+    - _RimIntensity: 1
     - _Roughness: 0.371
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _SrcMode: 5
+    - _Stencil: 0
+    - _StencilComp: 0
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
     - _Surface: 0
     - _ThicknessMax: 1.27
     - _ThicknessMin: 0
     - _UVSec: 0
-    - _VertexAOOn: 1
+    - _VertexAOOn: 0
     - _VertexOffsetAttenUseFurMaskY: 0
     - _WindOn: 0
     - _WindScale: 1.36
     - _WorkflowMode: 1
+    - _ZTestMode: 4
     - _ZWrite: 1
+    - _ZWriteMode: 0
     m_Colors:
     - _BaseColor: {r: 0.79073066, g: 0.79073066, b: 0.79073066, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color1: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+    - _Color1: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
     - _Color2: {r: 2.098455, g: 2.098455, b: 2.098455, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
